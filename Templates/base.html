@@ -1,0 +1,57 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock  %}</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+    <body  id="bg" style="background-image: url({% static 'images/blackbg.jpg' %});" >
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'store' %}">APP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+      
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
+                </li>
+           
+              </ul>
+              <div class="form-inline my-2 my-lg-0">
+
+                {% if user.is_authenticated %}
+                  <a href="logout" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Logout </a>
+                {% else %}
+                  <a href="register" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Create Account </a>
+                  <a href="login" class="btn" style="color: white; background-color: #fd5e14; margin-left: 10px; "type="submit" id="header-links">Log In</a>
+                {% endif %}
+                   
+                   <a href="{% url 'cart' %}">
+                      <img  id="cart-icon" src="{% static 'images/CART.png' %}">
+                  </a>
+                  <p id="cart-total">0</p>
+      
+              </div>
+            </div>
+          </nav>
+
+          <div>
+            <div class="container">
+              {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">{{message}}</div>
+              {% endfor %}
+            {% endif %}
+            </div>
+            {% block content %}
+            {% endblock content %}
+          </div>
+    </body>
+</html>
